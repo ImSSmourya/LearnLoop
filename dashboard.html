@@ -1,0 +1,2919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LearnLoop Dashboard</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Inter, Arial, sans-serif;
+            background: #f5f6fa;
+            color: #171923;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 235px;
+            height: 100vh;
+
+            background: #171923;
+            color: white;
+
+            padding: 28px 16px;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            padding: 0 12px;
+            margin-bottom: 55px;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #8179ff;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .nav-item {
+            width: 100%;
+
+            border: none;
+
+            background: transparent;
+            color: #a9abb7;
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            text-align: left;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: #242633;
+            color: white;
+        }
+
+        .nav-item.active {
+            background: #635bff;
+            color: white;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .streak {
+            background: #232532;
+            padding: 14px;
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-bottom: 12px;
+        }
+
+        .streak-icon {
+            font-size: 21px;
+        }
+
+        .streak strong,
+        .streak small {
+            display: block;
+        }
+
+        .streak strong {
+            font-size: 11px;
+        }
+
+        .streak small {
+            color: #8f92a0;
+            font-size: 9px;
+            margin-top: 2px;
+        }
+
+        .update-btn {
+            width: 100%;
+
+            border: 1px solid #343746;
+
+            background: transparent;
+            color: #c2c4ce;
+
+            padding: 11px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-size: 11px;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 235px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 72px;
+
+            padding: 0 5%;
+
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            background: rgba(255,255,255,0.92);
+
+            border-bottom: 1px solid #e5e6ec;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 37px;
+            height: 37px;
+
+            border-radius: 50%;
+
+            background: #635bff;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .profile strong,
+        .profile small {
+            display: block;
+        }
+
+        .profile strong {
+            font-size: 11px;
+        }
+
+        .profile small {
+            color: #8b8f9c;
+            font-size: 9px;
+        }
+
+        /* =========================
+           CONTENT
+        ========================= */
+
+        .content {
+            max-width: 1400px;
+            margin: auto;
+
+            padding: 45px 5%;
+        }
+
+        .welcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            margin-bottom: 28px;
+        }
+
+        .eyebrow {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: #858998;
+
+            margin-bottom: 7px;
+        }
+
+        .welcome h1 {
+            font-size: 35px;
+            letter-spacing: -1.6px;
+
+            margin-bottom: 7px;
+        }
+
+        .welcome p {
+            color: #777c8c;
+            font-size: 13px;
+        }
+
+        .date {
+            background: white;
+
+            border: 1px solid #e3e4ea;
+
+            padding: 9px 13px;
+
+            border-radius: 9px;
+
+            color: #777c8c;
+
+            font-size: 10px;
+        }
+
+        /* =========================
+           METRICS
+        ========================= */
+
+        .metrics {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 18px;
+        }
+
+        .metric {
+            background: white;
+
+            border: 1px solid #e3e4ea;
+
+            border-radius: 15px;
+
+            padding: 21px;
+
+            box-shadow: 0 8px 25px rgba(0,0,0,0.025);
+        }
+
+        .metric-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            color: #777c8c;
+
+            font-size: 11px;
+        }
+
+        .metric-icon {
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 9px;
+
+            background: #eeedff;
+        }
+
+        .metric-value {
+            font-size: 30px;
+            font-weight: 800;
+
+            letter-spacing: -1.5px;
+
+            margin-top: 13px;
+            margin-bottom: 5px;
+        }
+
+        .metric-note {
+            font-size: 10px;
+            color: #30a56a;
+        }
+
+        /* =========================
+           AI ACTION
+        ========================= */
+
+        .ai-card {
+            min-height: 230px;
+
+            border-radius: 19px;
+
+            padding: 32px 35px;
+
+            background: linear-gradient(
+                120deg,
+                #171923,
+                #25273a
+            );
+
+            color: white;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .ai-content {
+            max-width: 750px;
+        }
+
+        .ai-label {
+            font-size: 9px;
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            color: #aaa6ff;
+
+            margin-bottom: 11px;
+        }
+
+        .ai-card h2 {
+            font-size: 27px;
+            letter-spacing: -1px;
+
+            margin-bottom: 6px;
+        }
+
+        .ai-card p {
+            color: #c1c3cc;
+            font-size: 13px;
+
+            margin-bottom: 18px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            padding: 6px 9px;
+
+            background: rgba(255,255,255,0.07);
+
+            border-radius: 7px;
+
+            color: #c4c5ce;
+
+            font-size: 9px;
+        }
+
+        .start-btn {
+            border: none;
+
+            background: #635bff;
+            color: white;
+
+            padding: 11px 17px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .priority {
+            width: 125px;
+            height: 125px;
+
+            border-radius: 50%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border: 2px solid #635bff;
+
+            background: #202233;
+        }
+
+        .priority div {
+            text-align: center;
+        }
+
+        .priority strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .priority small {
+            color: #9194a1;
+            font-size: 9px;
+        }
+
+        /* =========================
+           GRID
+        ========================= */
+
+        .grid {
+            display: grid;
+
+            grid-template-columns: 1.15fr 0.85fr;
+
+            gap: 18px;
+
+            margin-bottom: 18px;
+        }
+
+        .card {
+            background: white;
+
+            border: 1px solid #e3e4ea;
+
+            border-radius: 15px;
+
+            padding: 25px;
+        }
+
+        .card-title {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 22px;
+        }
+
+        .card-title h2 {
+            font-size: 19px;
+            letter-spacing: -0.5px;
+        }
+
+        .view-btn {
+            border: none;
+
+            background: transparent;
+
+            color: #635bff;
+
+            cursor: pointer;
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        /* =========================
+           TASKS
+        ========================= */
+
+        .task {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 14px 0;
+
+            border-bottom: 1px solid #eef0f3;
+        }
+
+        .task:last-child {
+            border-bottom: none;
+        }
+
+        .task-icon {
+            width: 34px;
+            height: 34px;
+
+            border-radius: 9px;
+
+            background: #f1f2f6;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 12px;
+
+            flex-shrink: 0;
+        }
+
+        .task.done .task-icon {
+            background: #eaf8ef;
+        }
+
+        .task.current .task-icon {
+            background: #eeedff;
+            color: #635bff;
+        }
+
+        .task-info {
+            flex: 1;
+        }
+
+        .task-info strong,
+        .task-info span {
+            display: block;
+        }
+
+        .task-info strong {
+            font-size: 12px;
+        }
+
+        .task-info span {
+            color: #898d9a;
+            font-size: 10px;
+
+            margin-top: 3px;
+        }
+
+        .task-status {
+            font-size: 9px;
+            font-weight: 700;
+            color: #979ba7;
+        }
+
+        .status-done {
+            color: #32a66a;
+        }
+
+        .status-next {
+            color: #635bff;
+        }
+
+        /* =========================
+           MASTERY
+        ========================= */
+
+        .mastery-item {
+            margin-bottom: 19px;
+        }
+
+        .mastery-head {
+            display: flex;
+            justify-content: space-between;
+
+            font-size: 11px;
+
+            margin-bottom: 7px;
+        }
+
+        .mastery-head strong {
+            font-size: 11px;
+        }
+
+        .bar {
+            height: 7px;
+
+            background: #eef0f4;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        .fill {
+            height: 100%;
+
+            border-radius: 10px;
+
+            background: #635bff;
+        }
+
+        .weak {
+            margin-top: 22px;
+
+            background: #fff8eb;
+
+            border-radius: 10px;
+
+            padding: 12px;
+
+            font-size: 10px;
+        }
+
+        .weak strong {
+            display: block;
+
+            margin-bottom: 3px;
+        }
+
+        .weak span {
+            color: #858998;
+        }
+
+        /* =========================
+           WEEKLY
+        ========================= */
+
+        .weekly {
+            margin-bottom: 18px;
+        }
+
+        .weekly-head {
+            display: flex;
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        .weekly-head h2 {
+            font-size: 19px;
+        }
+
+        .weekly-score {
+            color: #635bff;
+
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .weekly-score span {
+            display: block;
+
+            color: #858a98;
+
+            font-size: 8px;
+
+            text-align: right;
+
+            font-weight: 500;
+        }
+
+        .bars {
+            height: 185px;
+
+            display: flex;
+
+            justify-content: space-around;
+
+            align-items: flex-end;
+
+            gap: 12px;
+        }
+
+        .day {
+            height: 100%;
+
+            flex: 1;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            gap: 7px;
+        }
+
+        .bar-bg {
+            width: 100%;
+            max-width: 55px;
+
+            height: 145px;
+
+            background: #f0f1f5;
+
+            border-radius: 8px;
+
+            display: flex;
+            align-items: flex-end;
+
+            overflow: hidden;
+        }
+
+        .day-fill {
+            width: 100%;
+
+            background: #cbc8ff;
+
+            border-radius: 8px 8px 0 0;
+        }
+
+        .day-fill.today {
+            background: #635bff;
+        }
+
+        .day-name {
+            color: #898d9a;
+
+            font-size: 9px;
+        }
+
+        /* =========================
+           ADAPTIVE
+        ========================= */
+
+        .adaptive {
+            background: #eeedff;
+
+            border: 1px solid #dfdcff;
+
+            border-radius: 15px;
+
+            padding: 28px 30px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+        .adaptive h2 {
+            font-size: 21px;
+            letter-spacing: -0.7px;
+
+            margin-bottom: 8px;
+        }
+
+        .adaptive p {
+            color: #707585;
+            font-size: 11px;
+
+            max-width: 700px;
+        }
+
+        .simulate {
+            border: 1px solid #635bff;
+
+            background: white;
+
+            color: #635bff;
+
+            padding: 12px 16px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            flex-shrink: 0;
+        }
+
+        /* =========================
+           TOAST
+        ========================= */
+
+        .toast {
+            position: fixed;
+
+            right: 25px;
+            bottom: 25px;
+
+            background: #171923;
+            color: white;
+
+            padding: 13px 17px;
+
+            border-radius: 9px;
+
+            font-size: 11px;
+
+            opacity: 0;
+            transform: translateY(20px);
+
+            transition: 0.3s;
+
+            pointer-events: none;
+
+            z-index: 100;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1050px) {
+
+            .metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                width: 70px;
+                padding: 25px 8px;
+            }
+
+            .logo {
+                font-size: 0;
+                text-align: center;
+            }
+
+            .logo span {
+                font-size: 19px;
+            }
+
+            .nav-item {
+                text-align: center;
+                font-size: 0;
+            }
+
+            .nav-item:first-letter {
+                font-size: 18px;
+            }
+
+            .streak {
+                justify-content: center;
+            }
+
+            .streak div,
+            .update-btn {
+                display: none;
+            }
+
+            .main {
+                margin-left: 70px;
+            }
+
+            .content {
+                padding: 30px 18px;
+            }
+
+            .welcome {
+                flex-direction: column;
+                align-items: flex-start;
+
+                gap: 12px;
+            }
+
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .priority {
+                display: none;
+            }
+
+            .ai-card {
+                padding: 25px;
+            }
+
+            .adaptive {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* ==========================================
+   LEARNLOOP DASHBOARD THEME
+========================================== */
+
+body {
+    background: #F7F9F7;
+    color: #102A2A;
+}
+
+.sidebar {
+    background: #102A2A;
+}
+
+.logo span {
+    color: #36B5AA;
+}
+
+.nav-item.active {
+    background: #087F78;
+}
+
+.nav-item:hover {
+    background: #193B3A;
+    color: white;
+}
+
+.sidebar-settings {
+    border-color: #31504F;
+}
+
+.topbar {
+    background: rgba(255, 255, 255, 0.94);
+    border-color: #DDE8E5;
+}
+
+.avatar {
+    background: #087F78;
+}
+
+.metric {
+    border-color: #DDE8E5;
+}
+
+.metric-icon {
+    background: #DFF4EE;
+    color: #087F78;
+}
+
+.ai-card {
+    background:
+        linear-gradient(
+            120deg,
+            #102A2A,
+            #174442
+        );
+}
+
+.ai-label {
+    color: #63D1C6;
+}
+
+.start-btn {
+    background: #087F78;
+}
+
+.priority {
+    border-color: #087F78;
+    background: #193B3A;
+}
+
+.task.current .task-icon {
+    background: #DFF4EE;
+    color: #087F78;
+}
+
+.status-next {
+    color: #087F78;
+}
+
+.fill {
+    background: #087F78;
+}
+
+.day-fill.today {
+    background: #087F78;
+}
+
+.day-fill {
+    background: #B9DED7;
+}
+
+.weak {
+    background: #FFF6E5;
+}
+
+.adaptive {
+    background: #DFF4EE;
+    border-color: #C6EAE1;
+}
+
+.simulate {
+    border-color: #087F78;
+    color: #087F78;
+}
+
+.toast {
+    background: #102A2A;
+}
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Learn<span>Loop</span>
+        </div>
+
+        <div class="nav">
+
+            <button class="nav-item active">
+                🏠 Dashboard
+            </button>
+
+            <button class="nav-item">
+                📅 My Plan
+            </button>
+
+            <button class="nav-item">
+                📈 Progress
+            </button>
+
+            <button class="nav-item">
+                ✨ AI Coach
+            </button>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="streak">
+
+                <div class="streak-icon">
+                    🔥
+                </div>
+
+                <div>
+                    <strong>4 day streak</strong>
+                    <small>Keep going!</small>
+                </div>
+
+            </div>
+
+
+            <button
+                class="update-btn"
+                onclick="window.location.href='planner.html'">
+
+                ⚙ Update Plan
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="profile">
+
+                <div class="avatar">
+                    S
+                </div>
+
+                <div>
+                    <strong>Student</strong>
+                    <small>Learner</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="content">
+
+
+            <!-- WELCOME -->
+
+            <div class="welcome">
+
+                <div>
+
+                    <div class="eyebrow">
+                        YOUR LEARNING DASHBOARD
+                    </div>
+
+                    <h1>
+                        Good evening 👋
+                    </h1>
+
+                    <p id="examMessage">
+                        Here's what matters most for your learning today.
+                    </p>
+
+                </div>
+
+                <div
+                    class="date"
+                    id="dateDisplay">
+                </div>
+
+            </div>
+
+
+            <!-- METRICS -->
+
+            <section class="metrics">
+
+                <div class="metric">
+
+                    <div class="metric-top">
+                        Overall Mastery
+                        <div class="metric-icon">✦</div>
+                    </div>
+
+                    <div class="metric-value">
+                        68%
+                    </div>
+
+                    <div class="metric-note">
+                        ↑ 8% this week
+                    </div>
+
+                </div>
+
+
+                <div class="metric">
+
+                    <div class="metric-top">
+                        Exam Countdown
+                        <div class="metric-icon">◷</div>
+                    </div>
+
+                    <div
+                        class="metric-value"
+                        id="examDays">
+
+                        --
+
+                    </div>
+
+                    <div class="metric-note"
+                         style="color:#858a98;">
+                        days remaining
+                    </div>
+
+                </div>
+
+
+                <div class="metric">
+
+                    <div class="metric-top">
+                        Today's Progress
+                        <div class="metric-icon">✓</div>
+                    </div>
+
+                    <div class="metric-value">
+                        2/3
+                    </div>
+
+                    <div class="metric-note">
+                        67% completed
+                    </div>
+
+                </div>
+
+
+                <div class="metric">
+
+                    <div class="metric-top">
+                        Study Time
+                        <div class="metric-icon">◒</div>
+                    </div>
+
+                    <div class="metric-value">
+                        2.3h
+                    </div>
+
+                    <div class="metric-note">
+                        ↑ 32 min today
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- AI NEXT ACTION -->
+
+            <section class="ai-card">
+
+                <div class="ai-content">
+
+                    <div class="ai-label">
+                        ✦ AI RECOMMENDATION
+                    </div>
+
+                    <h2>
+                        Your next best action
+                    </h2>
+
+                    <p id="aiAction">
+                        Study Electrostatics for 35 minutes.
+                    </p>
+
+                    <div class="tags">
+
+                        <div class="tag">
+                            High exam importance
+                        </div>
+
+                        <div class="tag">
+                            Low mastery
+                        </div>
+
+                        <div class="tag">
+                            Due soon
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="start-btn"
+                        onclick="startSession()">
+
+                        Start Study Session →
+
+                    </button>
+
+                </div>
+
+
+                <div class="priority">
+
+                    <div>
+                        <strong>HIGH</strong>
+                        <small>Priority</small>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PLAN + MASTERY -->
+
+            <section class="grid">
+
+
+                <!-- PLAN -->
+
+                <div class="card">
+
+                    <div class="card-title">
+
+                        <div>
+                            <div class="eyebrow">
+                                TODAY
+                            </div>
+
+                            <h2>
+                                Your Study Plan
+                            </h2>
+                        </div>
+
+                        <button class="view-btn">
+                            View all →
+                        </button>
+
+                    </div>
+
+
+                    <div id="taskList">
+
+                        <div class="task done">
+
+                            <div class="task-icon">
+                                ✓
+                            </div>
+
+                            <div class="task-info">
+
+                                <strong>
+                                    Mathematics
+                                </strong>
+
+                                <span>
+                                    Integration • 45 min
+                                </span>
+
+                            </div>
+
+                            <div class="task-status status-done">
+                                Completed
+                            </div>
+
+                        </div>
+
+
+                        <div class="task current">
+
+                            <div class="task-icon">
+                                →
+                            </div>
+
+                            <div class="task-info">
+
+                                <strong>
+                                    Physics
+                                </strong>
+
+                                <span>
+                                    Electrostatics • 35 min
+                                </span>
+
+                            </div>
+
+                            <div class="task-status status-next">
+                                Next
+                            </div>
+
+                        </div>
+
+
+                        <div class="task">
+
+                            <div class="task-icon">
+                                ○
+                            </div>
+
+                            <div class="task-info">
+
+                                <strong>
+                                    Chemistry
+                                </strong>
+
+                                <span>
+                                    Organic Revision • 30 min
+                                </span>
+
+                            </div>
+
+                            <div class="task-status">
+                                Later
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MASTERY -->
+
+                <div class="card">
+
+                    <div class="card-title">
+
+                        <div>
+                            <div class="eyebrow">
+                                PERFORMANCE
+                            </div>
+
+                            <h2>
+                                Subject Mastery
+                            </h2>
+                        </div>
+
+                    </div>
+
+
+                    <div class="mastery-item">
+
+                        <div class="mastery-head">
+                            <span>Mathematics</span>
+                            <strong>76%</strong>
+                        </div>
+
+                        <div class="bar">
+                            <div
+                                class="fill"
+                                style="width:76%;">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="mastery-item">
+
+                        <div class="mastery-head">
+                            <span>Physics</span>
+                            <strong>51%</strong>
+                        </div>
+
+                        <div class="bar">
+                            <div
+                                class="fill"
+                                style="width:51%;">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="mastery-item">
+
+                        <div class="mastery-head">
+                            <span>Chemistry</span>
+                            <strong>78%</strong>
+                        </div>
+
+                        <div class="bar">
+                            <div
+                                class="fill"
+                                style="width:78%;">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="weak">
+
+                        <strong>
+                            ⚠ Focus area
+                        </strong>
+
+                        <span>
+                            Electrostatics needs more revision.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- WEEKLY -->
+
+            <section class="card weekly">
+
+                <div class="weekly-head">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            CONSISTENCY
+                        </div>
+
+                        <h2>
+                            Weekly Progress
+                        </h2>
+
+                    </div>
+
+                    <div class="weekly-score">
+                        72%
+                        <span>completed</span>
+                    </div>
+
+                </div>
+
+
+                <div class="bars">
+
+                    <div class="day">
+                        <div class="bar-bg">
+                            <div
+                                class="day-fill"
+                                style="height:55%;">
+                            </div>
+                        </div>
+                        <div class="day-name">Mon</div>
+                    </div>
+
+
+                    <div class="day">
+                        <div class="bar-bg">
+                            <div
+                                class="day-fill"
+                                style="height:75%;">
+                            </div>
+                        </div>
+                        <div class="day-name">Tue</div>
+                    </div>
+
+
+                    <div class="day">
+                        <div class="bar-bg">
+                            <div
+                                class="day-fill"
+                                style="height:40%;">
+                            </div>
+                        </div>
+                        <div class="day-name">Wed</div>
+                    </div>
+
+
+                    <div class="day">
+                        <div class="bar-bg">
+                            <div
+                                class="day-fill"
+                                style="height:90%;">
+                            </div>
+                        </div>
+                        <div class="day-name">Thu</div>
+                    </div>
+
+
+                    <div class="day">
+                        <div class="bar-bg">
+                            <div
+                                class="day-fill today"
+                                style="height:65%;">
+                            </div>
+                        </div>
+                        <div class="day-name">Fri</div>
+                    </div>
+
+
+                    <div class="day">
+                        <div class="bar-bg">
+                            <div
+                                class="day-fill"
+                                style="height:30%;">
+                            </div>
+                        </div>
+                        <div class="day-name">Sat</div>
+                    </div>
+
+
+                    <div class="day">
+                        <div class="bar-bg">
+                            <div
+                                class="day-fill"
+                                style="height:15%;">
+                            </div>
+                        </div>
+                        <div class="day-name">Sun</div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ADAPTIVE DIFFERENTIATOR -->
+
+            <section class="adaptive">
+
+                <div>
+
+                    <div class="eyebrow">
+                        THE LEARNLOOP DIFFERENCE
+                    </div>
+
+                    <h2>
+                        Life changed your schedule?
+                        Your plan changes with it.
+                    </h2>
+
+                    <p>
+                        Missed a session? LearnLoop redistributes
+                        your remaining study time instead of leaving
+                        you with an outdated timetable.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="simulate"
+                    onclick="simulateMissedSession()">
+
+                    Simulate Missed Session
+
+                </button>
+
+            </section>
+
+
+        </section>
+
+    </main>
+
+
+    <div id="toast" class="toast">
+        Plan adapted successfully.
+    </div>
+
+
+    <script>
+
+// ============================================
+// LEARNLOOP DASHBOARD ENGINE
+// ============================================
+
+let studentData = null;
+let studyPlan = null;
+let masteryData = {};
+let completedSessions = [];
+
+
+// ============================================
+// LOAD DATA
+// ============================================
+
+function loadData() {
+
+    try {
+
+        const student =
+            localStorage.getItem(
+                "learnLoopStudyData"
+            );
+
+        const plan =
+            localStorage.getItem(
+                "learnLoopPlan"
+            );
+
+        const mastery =
+            localStorage.getItem(
+                "learnLoopMastery"
+            );
+
+        const completed =
+            localStorage.getItem(
+                "learnLoopCompletedSessions"
+            );
+
+
+        if (student) {
+            studentData =
+                JSON.parse(student);
+        }
+
+        if (plan) {
+            studyPlan =
+                JSON.parse(plan);
+        }
+
+        if (mastery) {
+            masteryData =
+                JSON.parse(mastery);
+        }
+
+        if (completed) {
+            completedSessions =
+                JSON.parse(completed);
+        }
+
+    } catch (error) {
+
+        console.error(
+            "LearnLoop data error:",
+            error
+        );
+
+    }
+}
+
+
+// ============================================
+// CURRENT DATE
+// ============================================
+
+function setDate() {
+
+    const today = new Date();
+
+    document.getElementById(
+        "dateDisplay"
+    ).textContent =
+        today.toLocaleDateString(
+            "en-IN",
+            {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+            }
+        );
+}
+
+
+// ============================================
+// EXAM COUNTDOWN
+// ============================================
+
+function updateExam() {
+
+    if (
+        !studentData ||
+        !studentData.examDate
+    ) {
+        return;
+    }
+
+
+    const today =
+        new Date();
+
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    const examDate =
+        new Date(
+            studentData.examDate
+        );
+
+    examDate.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    const difference =
+        examDate.getTime() -
+        today.getTime();
+
+
+    const days =
+        Math.max(
+            0,
+            Math.ceil(
+                difference /
+                (1000 * 60 * 60 * 24)
+            )
+        );
+
+
+    document.getElementById(
+        "examDays"
+    ).textContent =
+        days;
+
+
+    document.getElementById(
+        "examMessage"
+    ).textContent =
+        `Preparing for ${studentData.examName}. Your plan adapts as you learn.`;
+}
+
+
+// ============================================
+// GET TODAY'S SESSIONS
+// ============================================
+
+function getTodaySessions() {
+
+    if (
+        !studyPlan ||
+        !studyPlan.days ||
+        !studyPlan.days.length
+    ) {
+        return [];
+    }
+
+
+    // Our current MVP starts from Day 1.
+    return studyPlan.days[0].sessions || [];
+}
+
+
+// ============================================
+// SESSION KEY
+// ============================================
+
+function getSessionKey(session) {
+
+    return (
+        `${session.subject}::${session.topic}`
+    );
+
+}
+
+
+// ============================================
+// IS COMPLETED?
+// ============================================
+
+function isCompleted(session) {
+
+    return completedSessions.includes(
+        getSessionKey(session)
+    );
+
+}
+
+
+// ============================================
+// FIND NEXT BEST SESSION
+// ============================================
+
+function getNextBestSession(sessions) {
+
+    const remaining =
+        sessions.filter(
+            session =>
+                !isCompleted(session)
+        );
+
+
+    if (!remaining.length) {
+        return null;
+    }
+
+
+    return [...remaining].sort(
+        (a, b) => {
+
+            const scoreA =
+                calculateSessionPriority(a);
+
+            const scoreB =
+                calculateSessionPriority(b);
+
+
+            return scoreB - scoreA;
+
+        }
+    )[0];
+
+}
+
+function calculateSessionPriority(session) {
+
+    // -----------------------------------
+    // Base priority
+    // -----------------------------------
+
+    const basePriority = {
+
+        High: 30,
+        Medium: 20,
+        Low: 10
+
+    };
+
+
+    let score =
+        basePriority[
+            session.priority
+        ] || 10;
+
+
+    // -----------------------------------
+    // Mastery adjustment
+    // -----------------------------------
+
+    const mastery =
+        masteryData[
+            session.subject
+        ];
+
+
+    // Untested subjects stay neutral
+    if (
+        typeof mastery === "number"
+    ) {
+
+        if (mastery < 40) {
+
+            score += 40;
+
+        } else if (mastery < 60) {
+
+            score += 25;
+
+        } else if (mastery < 75) {
+
+            score += 10;
+
+        } else {
+
+            score -= 5;
+
+        }
+
+    }
+
+
+    // -----------------------------------
+    // Weak-topic adjustment
+    // -----------------------------------
+
+    const weakTopics =
+        (studentData?.weakTopics || "")
+            .split(",")
+            .map(topic =>
+                topic.trim().toLowerCase()
+            )
+            .filter(Boolean);
+
+
+    const sessionTopic =
+        String(
+            session.topic || ""
+        ).toLowerCase();
+
+
+    const matchesWeakTopic =
+        weakTopics.some(
+            weakTopic =>
+                sessionTopic.includes(
+                    weakTopic
+                ) ||
+                weakTopic.includes(
+                    sessionTopic
+                )
+        );
+
+
+    if (matchesWeakTopic) {
+
+        score += 20;
+
+    }
+
+
+    // -----------------------------------
+    // Duration tie-break
+    // -----------------------------------
+
+    score +=
+        Math.min(
+            Number(session.duration || 0) / 10,
+            5
+        );
+
+
+    return score;
+}
+
+
+// ============================================
+// RENDER STUDY PLAN
+// ============================================
+
+function renderPlan() {
+
+    const taskList =
+        document.getElementById(
+            "taskList"
+        );
+
+
+    if (!taskList) {
+        return;
+    }
+
+
+    const sessions =
+        getTodaySessions();
+
+
+    if (!sessions.length) {
+
+        taskList.innerHTML = `
+
+            <div class="task">
+
+                <div class="task-icon">
+                    ✓
+                </div>
+
+                <div class="task-info">
+
+                    <strong>
+                        Buffer / Revision
+                    </strong>
+
+                    <span>
+                        No major sessions scheduled today.
+                    </span>
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    const nextSession =
+        getNextBestSession(
+            sessions
+        );
+
+
+    taskList.innerHTML = "";
+
+
+    sessions.forEach(
+        session => {
+
+            const completed =
+                isCompleted(
+                    session
+                );
+
+
+            const isNext =
+                nextSession &&
+                getSessionKey(
+                    session
+                ) ===
+                getSessionKey(
+                    nextSession
+                );
+
+
+            const task =
+                document.createElement(
+                    "div"
+                );
+
+
+            task.className =
+                completed
+                    ? "task done"
+                    : isNext
+                        ? "task current"
+                        : "task";
+
+
+            const icon =
+                completed
+                    ? "✓"
+                    : isNext
+                        ? "→"
+                        : "○";
+
+
+            let status =
+                "Planned";
+
+
+            let statusClass =
+                "";
+
+
+            if (completed) {
+
+                status =
+                    "Completed";
+
+                statusClass =
+                    "status-done";
+
+            } else if (isNext) {
+
+                status =
+                    "Next";
+
+                statusClass =
+                    "status-next";
+
+            }
+
+
+            task.innerHTML = `
+
+                <div class="task-icon">
+                    ${icon}
+                </div>
+
+                <div class="task-info">
+
+                    <strong>
+                        ${escapeHTML(session.subject)}
+                    </strong>
+
+                       <span>
+                        ${escapeHTML(session.topic)}
+                        • ${session.duration} min
+                        • ${escapeHTML(session.type)}
+                        ${
+                            session.adaptiveReason
+                                ? `• ${escapeHTML(session.adaptiveReason)}`
+                                : ""
+                        }
+                        </span>
+                    
+
+                </div>
+
+                <div class="task-status ${statusClass}">
+                    ${status}
+                </div>
+
+            `;
+
+
+            taskList.appendChild(
+                task
+            );
+
+        }
+    );
+
+
+    // Update AI recommendation
+
+    updateNextBestAction(
+        nextSession
+    );
+
+
+    // Update progress
+
+    updateTodayProgress(
+        sessions
+    );
+
+}
+
+
+// ============================================
+// NEXT BEST ACTION
+// ============================================
+
+function updateNextBestAction(
+    session
+) {
+
+    const action =
+        document.getElementById(
+            "aiAction"
+        );
+
+
+    if (!action) {
+        return;
+    }
+
+
+    if (!session) {
+
+        action.textContent =
+            "Today's plan is complete. Use the remaining time for light revision.";
+
+        return;
+    }
+
+
+    const mastery =
+        masteryData[
+            session.subject
+        ];
+
+
+    let explanation =
+        "";
+
+
+    if (
+        typeof mastery === "number" &&
+        mastery < 40
+    ) {
+
+        explanation =
+            ` Your current mastery is ${mastery}%, so this topic has been prioritized.`;
+
+    } else if (
+        typeof mastery === "number" &&
+        mastery < 60
+    ) {
+
+        explanation =
+            ` Your current mastery is ${mastery}%, so LearnLoop is giving it extra attention.`;
+
+    } else if (
+        session.adaptiveReason
+    ) {
+
+        explanation =
+            ` ${session.adaptiveReason}.`;
+
+    }
+
+
+    action.textContent =
+        `Study ${session.topic} for ${session.duration} minutes.${explanation}`;
+
+}
+
+
+// ============================================
+// TODAY PROGRESS
+// ============================================
+
+function updateTodayProgress(
+    sessions
+) {
+
+    const completed =
+        sessions.filter(
+            session =>
+                isCompleted(session)
+        ).length;
+
+
+    const total =
+        sessions.length;
+
+
+    const metricValues =
+        document.querySelectorAll(
+            ".metric-value"
+        );
+
+
+    if (metricValues.length >= 3) {
+
+        metricValues[2].textContent =
+            `${completed}/${total}`;
+
+    }
+
+
+    const notes =
+        document.querySelectorAll(
+            ".metric-note"
+        );
+
+
+    if (notes.length >= 3) {
+
+        const percentage =
+            total
+                ? Math.round(
+                    completed /
+                    total *
+                    100
+                )
+                : 0;
+
+
+        notes[2].textContent =
+            `${percentage}% completed`;
+
+    }
+
+}
+
+
+// ============================================
+// SUBJECT MASTERY
+// ============================================
+
+function renderMastery() {
+
+    const items =
+        document.querySelectorAll(".mastery-item");
+
+    const subjects =
+        studentData?.subjects || [];
+
+    let knownScores = [];
+
+
+    items.forEach((item, index) => {
+
+        const subject =
+            subjects[index];
+
+
+        // Hide extra mastery rows
+        if (!subject) {
+
+            item.style.display = "none";
+
+            return;
+        }
+
+
+        item.style.display = "";
+
+
+        const score =
+            masteryData[subject];
+
+
+        const label =
+            item.querySelector(
+                ".mastery-head span"
+            );
+
+        const value =
+            item.querySelector(
+                ".mastery-head strong"
+            );
+
+        const fill =
+            item.querySelector(".fill");
+
+
+        // Subject name
+        if (label) {
+            label.textContent = subject;
+        }
+
+
+        // ============================
+        // NOT TESTED
+        // ============================
+
+        if (score === undefined) {
+
+            if (value) {
+
+                value.textContent =
+                    "Not tested";
+
+            }
+
+
+            if (fill) {
+
+                fill.style.width = "0%";
+
+            }
+
+
+            return;
+        }
+
+
+        // ============================
+        // TESTED
+        // ============================
+
+        const numericScore =
+            Number(score);
+
+
+        if (value) {
+
+            value.textContent =
+                `${numericScore}%`;
+
+        }
+
+
+        if (fill) {
+
+            fill.style.width =
+                `${numericScore}%`;
+
+        }
+
+
+        knownScores.push(
+            numericScore
+        );
+
+    });
+
+
+    // =================================
+    // OVERALL MASTERY
+    // =================================
+
+    const metricValues =
+        document.querySelectorAll(
+            ".metric-value"
+        );
+
+    const metricNotes =
+        document.querySelectorAll(
+            ".metric-note"
+        );
+
+
+    if (
+        metricValues.length > 0 &&
+        metricNotes.length > 0
+    ) {
+
+        // No quizzes yet
+        if (knownScores.length === 0) {
+
+            metricValues[0].textContent =
+                "—";
+
+            metricNotes[0].textContent =
+                "Take your first quiz";
+
+            metricNotes[0].style.color =
+                "#858a98";
+
+        }
+
+
+        // One or more subjects tested
+        else {
+
+            const average =
+                Math.round(
+                    knownScores.reduce(
+                        (sum, score) =>
+                            sum + score,
+                        0
+                    ) /
+                    knownScores.length
+                );
+
+
+            metricValues[0].textContent =
+                `${average}%`;
+
+            metricNotes[0].textContent =
+                `${knownScores.length} subject${
+                    knownScores.length === 1
+                        ? ""
+                        : "s"
+                } tested`;
+
+            metricNotes[0].style.color =
+                "#30a56a";
+
+        }
+
+    }
+
+
+    updateFocusArea();
+}
+
+
+// ============================================
+// FOCUS AREA
+// ============================================
+
+function updateFocusArea() {
+
+    const weakBox =
+        document.querySelector(".weak");
+
+
+    if (!weakBox) {
+        return;
+    }
+
+
+    const testedSubjects =
+        Object.entries(masteryData)
+            .filter(
+                ([subject, score]) =>
+                    typeof score === "number"
+            );
+
+
+    // Nothing tested yet
+    if (!testedSubjects.length) {
+
+        weakBox.innerHTML = `
+
+            <strong>
+                🎯 Focus area
+            </strong>
+
+            <span>
+                Complete a quiz to discover
+                your weakest measured subject.
+            </span>
+
+        `;
+
+        return;
+    }
+
+
+    // Lowest measured mastery
+    testedSubjects.sort(
+        (a, b) =>
+            Number(a[1]) -
+            Number(b[1])
+    );
+
+
+    const weakest =
+        testedSubjects[0];
+
+
+    weakBox.innerHTML = `
+
+        <strong>
+            ⚠ Focus area
+        </strong>
+
+        <span>
+            ${escapeHTML(weakest[0])}
+            has the lowest measured mastery
+            at ${weakest[1]}%.
+        </span>
+
+    `;
+}
+
+
+// ============================================
+// ADAPT PLAN FROM LATEST QUIZ
+// ============================================
+
+function applyQuizAdaptation() {
+
+    const savedResult =
+        localStorage.getItem(
+            "learnLoopLatestResult"
+        );
+
+
+    if (
+        !savedResult ||
+        !studyPlan
+    ) {
+        return;
+    }
+
+
+    let result;
+
+
+    try {
+
+        result =
+            JSON.parse(
+                savedResult
+            );
+
+    } catch (error) {
+
+        return;
+
+    }
+
+
+    if (
+        !result.subject ||
+        result.percentage === undefined
+    ) {
+        return;
+    }
+
+
+    const sessions =
+        getTodaySessions();
+
+
+    // -----------------------------------
+    // LOW SCORE
+    // -----------------------------------
+
+    if (result.percentage < 60) {
+
+        sessions.forEach(
+            session => {
+
+                if (
+                    session.subject ===
+                    result.subject
+                ) {
+
+                    session.priority =
+                        "High";
+
+                    session.adaptiveReason =
+                        "Low quiz performance";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    // -----------------------------------
+    // MEDIUM SCORE
+    // -----------------------------------
+
+    else if (
+        result.percentage < 80
+    ) {
+
+        sessions.forEach(
+            session => {
+
+                if (
+                    session.subject ===
+                    result.subject
+                ) {
+
+                    session.priority =
+                        "Medium";
+
+                    session.adaptiveReason =
+                        "Needs additional practice";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    // -----------------------------------
+    // STRONG SCORE
+    // -----------------------------------
+
+    else {
+
+        sessions.forEach(
+            session => {
+
+                if (
+                    session.subject ===
+                    result.subject
+                ) {
+
+                    if (
+                        session.priority ===
+                        "High"
+                    ) {
+
+                        session.priority =
+                            "Medium";
+
+                    }
+
+                    session.adaptiveReason =
+                        "Strong quiz performance";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    // Save adapted plan
+
+    localStorage.setItem(
+        "learnLoopPlan",
+        JSON.stringify(
+            studyPlan
+        )
+    );
+
+
+    // Remove latest result after applying it
+
+    localStorage.removeItem(
+        "learnLoopLatestResult"
+    );
+
+}
+
+
+// ============================================
+// START STUDY SESSION
+// ============================================
+
+function startSession() {
+
+    const sessions =
+        getTodaySessions();
+
+
+    const next =
+        getNextBestSession(
+            sessions
+        );
+
+
+    if (!next) {
+
+        showToast(
+            "Today's plan is complete 🎉"
+        );
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "learnLoopCurrentSession",
+        JSON.stringify(next)
+    );
+
+
+    window.location.href =
+        "quiz.html";
+
+}
+
+
+// ============================================
+// SIMULATE MISSED SESSION
+// ============================================
+
+function simulateMissedSession() {
+
+    const sessions =
+        getTodaySessions();
+
+
+    if (!sessions.length) {
+        return;
+    }
+
+
+    const next =
+        getNextBestSession(
+            sessions
+        );
+
+
+    if (!next) {
+
+        showToast(
+            "All sessions are already complete."
+        );
+
+        return;
+
+    }
+
+
+    // Move the next session
+    // to the end of the day.
+
+    const index =
+        sessions.findIndex(
+            session =>
+                getSessionKey(session) ===
+                getSessionKey(next)
+        );
+
+
+    if (index !== -1) {
+
+        sessions.splice(
+            index,
+            1
+        );
+
+        sessions.push(
+            next
+        );
+
+    }
+
+
+    // Save adapted plan
+
+    localStorage.setItem(
+        "learnLoopPlan",
+        JSON.stringify(
+            studyPlan
+        )
+    );
+
+
+    renderPlan();
+
+
+    showToast(
+        "✓ Study plan adapted"
+    );
+
+}
+
+
+// ============================================
+// TOAST
+// ============================================
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    if (!toast) {
+        return;
+    }
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        () => {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+        2500
+    );
+
+}
+
+
+// ============================================
+// HTML SAFETY
+// ============================================
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+// ============================================
+// INITIALIZE
+// ============================================
+
+loadData();
+
+setDate();
+
+updateExam();
+
+applyQuizAdaptation();
+
+renderPlan();
+
+renderMastery();
+
+</script>
+
+</body>
+</html>

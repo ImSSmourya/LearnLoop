@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Setup Your Plan | LearnLoop</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="planner-page">
+
+    <nav class="navbar">
+
+    <div class="logo">
+        Learn<span>Loop</span>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:15px;">
+
+        <div class="progress-label">
+            Step <strong>1</strong> of 2
+        </div>
+
+        <button
+            type="button"
+            onclick="resetLearnLoop()"
+            style="
+                border:1px solid #DDE8E5;
+                background:white;
+                color:#667572;
+                padding:8px 12px;
+                border-radius:8px;
+                font-size:10px;
+                font-weight:600;
+                cursor:pointer;
+            ">
+            Reset Demo
+        </button>
+
+    </div>
+
+</nav>
+
+
+    <main class="setup-container">
+
+        <div class="setup-header">
+
+            <div class="badge">
+                🎯 Let's personalize your learning
+            </div>
+
+            <h1>
+                Tell us about your goal.
+            </h1>
+
+            <p>
+                LearnLoop will use this information to create
+                a study plan built around your real schedule.
+            </p>
+
+        </div>
+
+
+        <form id="studyForm" class="setup-card">
+
+            <!-- Exam -->
+            <div class="form-group">
+
+                <label for="examName">
+                    What are you preparing for?
+                </label>
+
+                <input
+                    type="text"
+                    id="examName"
+                    placeholder="e.g. Semester Exams, JEE, NDA"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Exam Date -->
+            <div class="form-group">
+
+                <label for="examDate">
+                    When is your exam?
+                </label>
+
+                <input
+                    type="date"
+                    id="examDate"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Subjects -->
+            <div class="form-group">
+
+                <label>
+                    Your subjects
+                </label>
+
+                <div class="subject-input-row">
+
+                    <input
+                        type="text"
+                        id="subjectInput"
+                        placeholder="e.g. Mathematics"
+                    >
+
+                    <button
+                        type="button"
+                        class="add-button"
+                        onclick="addSubject()">
+                        Add
+                    </button>
+
+                </div>
+
+                <div id="subjectList" class="subject-list"></div>
+
+            </div>
+
+
+            <!-- Study Hours -->
+            <div class="form-group">
+
+                <label for="studyHours">
+                    How much time can you study daily?
+                </label>
+
+                <div class="range-container">
+
+                    <input
+                        type="range"
+                        id="studyHours"
+                        min="1"
+                        max="8"
+                        value="2"
+                        oninput="updateHours()"
+                    >
+
+                    <span id="hoursDisplay">
+                        2 hours
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Weak Areas -->
+            <div class="form-group">
+
+                <label for="weakTopics">
+                    Which topics do you struggle with?
+                </label>
+
+                <textarea
+                    id="weakTopics"
+                    rows="4"
+                    placeholder="e.g. Integration, Electrostatics, Data Structures..."
+                ></textarea>
+
+            </div>
+
+
+            <!-- Submit -->
+            <button
+                type="submit"
+                class="primary-button generate-button">
+
+                Generate My Study Plan →
+                
+            </button>
+
+        </form>
+
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+
+        let subjects = [];
+
+        function addSubject() {
+
+            const input =
+                document.getElementById("subjectInput");
+
+            const subject =
+                input.value.trim();
+
+            if (!subject) {
+                return;
+            }
+
+            if (subjects.includes(subject)) {
+                input.value = "";
+                return;
+            }
+
+            subjects.push(subject);
+            input.value = "";
+
+            renderSubjects();
+        }
+
+
+        function renderSubjects() {
+
+            const list =
+                document.getElementById("subjectList");
+
+            list.innerHTML = "";
+
+            subjects.forEach((subject, index) => {
+
+                const tag =
+                    document.createElement("div");
+
+                tag.className = "subject-tag";
+
+                tag.innerHTML = `
+                    ${subject}
+
+                    <button
+                        type="button"
+                        class="remove-subject"
+                        onclick="removeSubject(${index})">
+                        ×
+                    </button>
+                `;
+
+                list.appendChild(tag);
+            });
+        }
+
+
+        function removeSubject(index) {
+
+            subjects.splice(index, 1);
+
+            renderSubjects();
+        }
+
+
+        function updateHours() {
+
+            const slider =
+                document.getElementById("studyHours");
+
+            const display =
+                document.getElementById("hoursDisplay");
+
+            const hours =
+                Number(slider.value);
+
+            display.textContent =
+                hours === 1
+                    ? "1 hour"
+                    : `${hours} hours`;
+        }
+
+
+        const form =
+            document.getElementById("studyForm");
+
+        form.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+                if (subjects.length === 0) {
+
+                    alert(
+                        "Please add at least one subject."
+                    );
+
+                    return;
+                }
+
+                const button =
+                    document.querySelector(
+                        ".generate-button"
+                    );
+
+                const studyData = {
+
+                    examName:
+                        document
+                        .getElementById("examName")
+                        .value
+                        .trim(),
+
+                    examDate:
+                        document
+                        .getElementById("examDate")
+                        .value,
+
+                    subjects:
+                        subjects,
+
+                    studyHours:
+                        Number(
+                            document
+                            .getElementById("studyHours")
+                            .value
+                        ),
+
+                    weakTopics:
+                        document
+                        .getElementById("weakTopics")
+                        .value
+                        .trim()
+                };
+
+
+                button.disabled = true;
+
+                button.textContent =
+                    "Creating your AI plan...";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "/api/generate-plan",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify(
+                                        studyData
+                                    )
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            result.error ||
+                            "Plan generation failed."
+                        );
+                    }
+
+
+                    localStorage.setItem(
+                        "learnLoopStudyData",
+                        JSON.stringify(studyData)
+                    );
+
+
+                    localStorage.setItem(
+                        "learnLoopPlan",
+                        JSON.stringify(result.plan)
+                    );
+
+
+                    console.log(
+                        "AI PLAN:",
+                        result.plan
+                    );
+
+
+                    window.location.href =
+                        "dashboard.html";
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Plan generation error:",
+                        error
+                    );
+
+                    alert(
+                        "Something went wrong while creating your plan."
+                    );
+
+                    button.disabled = false;
+
+                    button.textContent =
+                        "Generate My Study Plan →";
+                }
+
+            }
+        );
+
+        function resetLearnLoop() {
+
+    const confirmed =
+        confirm(
+            "Reset LearnLoop demo data and start fresh?"
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    localStorage.removeItem(
+        "learnLoopStudyData"
+    );
+
+    localStorage.removeItem(
+        "learnLoopPlan"
+    );
+
+    localStorage.removeItem(
+        "learnLoopMastery"
+    );
+
+    localStorage.removeItem(
+        "learnLoopCompletedSessions"
+    );
+
+    localStorage.removeItem(
+        "learnLoopCurrentSession"
+    );
+
+    localStorage.removeItem(
+        "learnLoopLatestResult"
+    );
+
+    window.location.href =
+        "planner.html";
+}
+
+    </script>
+
+</body>
+</html>

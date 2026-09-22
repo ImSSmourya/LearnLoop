@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Knowledge Check | LearnLoop</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family:
+                Inter,
+                Arial,
+                sans-serif;
+
+            background: #f5f6fa;
+
+            color: #171923;
+
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        .header {
+
+            height: 72px;
+
+            background: white;
+
+            border-bottom:
+                1px solid #e4e5eb;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                0 6%;
+        }
+
+
+        .logo {
+
+            font-size: 24px;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+        }
+
+
+        .logo span {
+
+            color: #635bff;
+        }
+
+
+        .exit-btn {
+
+            border: none;
+
+            background: #f1f2f6;
+
+            color: #555a6b;
+
+            padding: 9px 13px;
+
+            border-radius: 8px;
+
+            font-size: 10px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================== */
+
+        .container {
+
+            width: 100%;
+
+            max-width: 780px;
+
+            margin: auto;
+
+            padding: 55px 20px 70px;
+        }
+
+
+        .intro {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .eyebrow {
+
+            color: #635bff;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .intro h1 {
+
+            font-size: 37px;
+
+            letter-spacing: -1.5px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .intro p {
+
+            color: #7b8090;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           PROGRESS
+        ========================== */
+
+        .progress-area {
+
+            margin-bottom: 24px;
+        }
+
+
+        .progress-info {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 7px;
+
+            font-size: 10px;
+
+            color: #858997;
+        }
+
+
+        .progress-bar {
+
+            height: 7px;
+
+            background: #e8e9ef;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+
+        .progress-fill {
+
+            width: 20%;
+
+            height: 100%;
+
+            background: #635bff;
+
+            border-radius: inherit;
+
+            transition: width 0.25s ease;
+        }
+
+
+        /* =========================
+           QUESTION CARD
+        ========================== */
+
+        .question-card {
+
+            background: white;
+
+            border:
+                1px solid #e3e4ea;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.04);
+        }
+
+
+        .question-number {
+
+            color: #635bff;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            margin-bottom: 10px;
+        }
+
+
+        .question {
+
+            font-size: 21px;
+
+            line-height: 1.3;
+
+            letter-spacing: -0.4px;
+
+            margin-bottom: 24px;
+        }
+
+
+        .options {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+
+        .option {
+
+            width: 100%;
+
+            border:
+                1px solid #e2e3e9;
+
+            background: white;
+
+            border-radius: 11px;
+
+            padding: 14px;
+
+            text-align: left;
+
+            cursor: pointer;
+
+            font-size: 12px;
+
+            transition: 0.18s;
+        }
+
+
+        .option:hover {
+
+            border-color: #635bff;
+
+            background: #faf9ff;
+        }
+
+
+        .option.selected {
+
+            border-color: #635bff;
+
+            background: #eeedff;
+
+            color: #4d46dd;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           CONTROLS
+        ========================== */
+
+        .controls {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            margin-top: 22px;
+        }
+
+
+        .next-btn {
+
+            border: none;
+
+            background: #635bff;
+
+            color: white;
+
+            padding: 12px 18px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+
+        .next-btn:disabled {
+
+            opacity: 0.45;
+
+            cursor: not-allowed;
+        }
+
+
+        /* =========================
+           RESULT
+        ========================== */
+
+        .result {
+
+            display: none;
+
+            text-align: center;
+        }
+
+
+        .result-icon {
+
+            width: 70px;
+
+            height: 70px;
+
+            background: #eeedff;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin: 0 auto 20px;
+
+            font-size: 30px;
+        }
+
+
+        .result h2 {
+
+            font-size: 32px;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .result p {
+
+            color: #777c8b;
+
+            font-size: 12px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .result-stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+
+            margin-bottom: 24px;
+        }
+
+
+        .result-stat {
+
+            background: #f7f8fb;
+
+            border:
+                1px solid #e4e5eb;
+
+            border-radius: 12px;
+
+            padding: 16px;
+        }
+
+
+        .result-stat strong {
+
+            display: block;
+
+            font-size: 22px;
+
+            margin-bottom: 3px;
+        }
+
+
+        .result-stat span {
+
+            color: #858997;
+
+            font-size: 9px;
+        }
+
+
+        .dashboard-btn {
+
+            border: none;
+
+            background: #171923;
+
+            color: white;
+
+            padding: 12px 18px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+
+        @media (max-width: 600px) {
+
+            .question-card {
+
+                padding: 22px;
+            }
+
+
+            .intro h1 {
+
+                font-size: 31px;
+            }
+
+
+            .question {
+
+                font-size: 18px;
+            }
+
+
+            .result-stats {
+
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ==========================================
+   LEARNLOOP QUIZ THEME
+========================================== */
+
+body {
+    background: #F7F9F7;
+    color: #102A2A;
+}
+
+.header {
+    border-color: #DDE8E5;
+}
+
+.logo span {
+    color: #087F78;
+}
+
+.eyebrow {
+    color: #087F78;
+}
+
+.exit-btn {
+    background: #EDF3F1;
+    color: #536461;
+}
+
+.progress-bar {
+    background: #E3ECE9;
+}
+
+.progress-fill {
+    background: #087F78;
+}
+
+.question-card {
+    border-color: #DDE8E5;
+}
+
+.option:hover {
+    border-color: #087F78;
+    background: #F1FAF7;
+}
+
+.option.selected {
+    border-color: #087F78;
+    background: #DFF4EE;
+    color: #05645F;
+}
+
+.next-btn {
+    background: #087F78;
+}
+
+.result-icon {
+    background: #DFF4EE;
+}
+
+.dashboard-btn {
+    background: #102A2A;
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="logo">
+            Learn<span>Loop</span>
+        </div>
+
+
+        <button
+            class="exit-btn"
+            onclick="goDashboard()">
+
+            Exit Quiz
+
+        </button>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main class="container">
+
+
+        <!-- INTRO -->
+
+        <section class="intro">
+
+            <div class="eyebrow">
+                LEARNING CHECK
+            </div>
+
+            <h1 id="quizTitle">
+                Quick Knowledge Check
+            </h1>
+
+            <p id="quizSubtitle">
+                Let's see how well you understood today's topic.
+            </p>
+
+        </section>
+
+
+        <!-- QUIZ -->
+
+        <section id="quizSection">
+
+
+            <div class="progress-area">
+
+                <div class="progress-info">
+
+                    <span id="questionCounter">
+                        Question 1 of 5
+                    </span>
+
+                    <span id="scorePreview">
+                        Score: 0
+                    </span>
+
+                </div>
+
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill"
+                        id="progressFill">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="question-card">
+
+                <div
+                    class="question-number"
+                    id="questionNumber">
+
+                    QUESTION 01
+
+                </div>
+
+
+                <div
+                    class="question"
+                    id="questionText">
+
+                    Loading question...
+
+                </div>
+
+
+                <div
+                    class="options"
+                    id="options">
+                </div>
+
+
+                <div class="controls">
+
+                    <button
+                        class="next-btn"
+                        id="nextButton"
+                        disabled
+                        onclick="nextQuestion()">
+
+                        Next Question →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESULT -->
+
+        <section
+            class="result"
+            id="resultSection">
+
+
+            <div class="result-icon">
+                🎯
+            </div>
+
+
+            <div class="eyebrow">
+                KNOWLEDGE CHECK COMPLETE
+            </div>
+
+
+            <h2 id="resultTitle">
+                Good work!
+            </h2>
+
+
+            <p id="resultMessage">
+                Your learning data has been updated.
+            </p>
+
+
+            <div class="result-stats">
+
+                <div class="result-stat">
+
+                    <strong id="finalScore">
+                        0/5
+                    </strong>
+
+                    <span>
+                        Questions Correct
+                    </span>
+
+                </div>
+
+
+                <div class="result-stat">
+
+                    <strong id="finalPercentage">
+                        0%
+                    </strong>
+
+                    <span>
+                        Quiz Score
+                    </span>
+
+                </div>
+
+
+                <div class="result-stat">
+
+                    <strong id="newMastery">
+                        0%
+                    </strong>
+
+                    <span>
+                        Updated Mastery
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="dashboard-btn"
+                onclick="goDashboard()">
+
+                Back to Dashboard →
+
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+
+        // =====================================
+        // LOAD STUDENT / SESSION DATA
+        // =====================================
+
+        let studentData = null;
+
+        let studyPlan = null;
+
+        let currentSession = null;
+
+
+        try {
+
+            const savedStudent =
+                localStorage.getItem(
+                    "learnLoopStudyData"
+                );
+
+            const savedPlan =
+                localStorage.getItem(
+                    "learnLoopPlan"
+                );
+
+            const savedSession =
+                localStorage.getItem(
+                    "learnLoopCurrentSession"
+                );
+
+
+            if (savedStudent) {
+
+                studentData =
+                    JSON.parse(savedStudent);
+
+            }
+
+
+            if (savedPlan) {
+
+                studyPlan =
+                    JSON.parse(savedPlan);
+
+            }
+
+
+            if (savedSession) {
+
+                currentSession =
+                    JSON.parse(savedSession);
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Could not load quiz data.",
+                error
+            );
+
+        }
+
+
+        // =====================================
+        // QUESTION DATABASE
+        // =====================================
+
+        const questionBank = {
+
+
+            mathematics: [
+
+                {
+                    question:
+                        "What is the derivative of x²?",
+
+                    options: [
+                        "x",
+                        "2x",
+                        "x²",
+                        "2"
+                    ],
+
+                    answer: 1
+                },
+
+                {
+                    question:
+                        "What is the integral of 2x?",
+
+                    options: [
+                        "x² + C",
+                        "2x² + C",
+                        "x + C",
+                        "2 + C"
+                    ],
+
+                    answer: 0
+                },
+
+                {
+                    question:
+                        "If f(x) = x³, what is f'(x)?",
+
+                    options: [
+                        "x²",
+                        "2x",
+                        "3x²",
+                        "3x"
+                    ],
+
+                    answer: 2
+                },
+
+                {
+                    question:
+                        "What does the constant C represent in an indefinite integral?",
+
+                    options: [
+                        "A fixed constant",
+                        "The derivative",
+                        "The variable",
+                        "The maximum value"
+                    ],
+
+                    answer: 0
+                },
+
+                {
+                    question:
+                        "The derivative of a constant is:",
+
+                    options: [
+                        "1",
+                        "The constant itself",
+                        "0",
+                        "Undefined"
+                    ],
+
+                    answer: 2
+                }
+
+            ],
+
+
+            physics: [
+
+                {
+                    question:
+                        "What is the SI unit of electric charge?",
+
+                    options: [
+                        "Volt",
+                        "Coulomb",
+                        "Ampere",
+                        "Ohm"
+                    ],
+
+                    answer: 1
+                },
+
+                {
+                    question:
+                        "Electric field is defined as:",
+
+                    options: [
+                        "Force per unit charge",
+                        "Charge per unit force",
+                        "Energy per unit mass",
+                        "Current per unit time"
+                    ],
+
+                    answer: 0
+                },
+
+                {
+                    question:
+                        "What happens to the electrostatic force if the distance between two charges is doubled?",
+
+                    options: [
+                        "It doubles",
+                        "It becomes four times larger",
+                        "It becomes one-fourth",
+                        "It remains unchanged"
+                    ],
+
+                    answer: 2
+                },
+
+                {
+                    question:
+                        "Like electric charges:",
+
+                    options: [
+                        "Attract",
+                        "Repel",
+                        "Disappear",
+                        "Have no interaction"
+                    ],
+
+                    answer: 1
+                },
+
+                {
+                    question:
+                        "The SI unit of electric potential difference is:",
+
+                    options: [
+                        "Joule",
+                        "Coulomb",
+                        "Volt",
+                        "Watt"
+                    ],
+
+                    answer: 2
+                }
+
+            ],
+
+
+            "computer science": [
+
+                {
+                    question:
+                        "Which data structure follows LIFO?",
+
+                    options: [
+                        "Queue",
+                        "Stack",
+                        "Array",
+                        "Graph"
+                    ],
+
+                    answer: 1
+                },
+
+                {
+                    question:
+                        "Which data structure follows FIFO?",
+
+                    options: [
+                        "Stack",
+                        "Tree",
+                        "Queue",
+                        "Heap"
+                    ],
+
+                    answer: 2
+                },
+
+                {
+                    question:
+                        "What is the average time complexity of binary search on a sorted array?",
+
+                    options: [
+                        "O(n)",
+                        "O(n²)",
+                        "O(log n)",
+                        "O(1)"
+                    ],
+
+                    answer: 2
+                },
+
+                {
+                    question:
+                        "Which structure stores elements in contiguous memory?",
+
+                    options: [
+                        "Array",
+                        "Linked List",
+                        "Graph",
+                        "Tree"
+                    ],
+
+                    answer: 0
+                },
+
+                {
+                    question:
+                        "Which traversal visits the root between left and right subtrees?",
+
+                    options: [
+                        "Preorder",
+                        "Inorder",
+                        "Postorder",
+                        "Level-order"
+                    ],
+
+                    answer: 1
+                }
+
+            ]
+
+        };
+
+
+        // =====================================
+        // SELECT QUESTIONS
+        // =====================================
+
+        function getQuestions() {
+
+            let subject =
+                currentSession?.subject ||
+                "Mathematics";
+
+
+            const normalized =
+                subject
+                    .toLowerCase()
+                    .trim();
+
+
+            let questions;
+
+
+            if (
+                normalized.includes(
+                    "computer"
+                ) ||
+                normalized.includes(
+                    "coding"
+                ) ||
+                normalized.includes(
+                    "program"
+                )
+            ) {
+
+                questions =
+                    questionBank[
+                        "computer science"
+                    ];
+
+            } else if (
+                normalized.includes(
+                    "physics"
+                )
+            ) {
+
+                questions =
+                    questionBank.physics;
+
+            } else {
+
+                questions =
+                    questionBank.mathematics;
+
+            }
+
+
+            return questions;
+        }
+
+
+        const questions =
+            getQuestions();
+
+
+        let currentQuestion = 0;
+
+        let score = 0;
+
+        let selectedAnswer = null;
+
+
+        // =====================================
+        // SHOW QUESTION
+        // =====================================
+
+        function showQuestion() {
+
+            const question =
+                questions[
+                    currentQuestion
+                ];
+
+
+            document.getElementById(
+                "questionCounter"
+            ).textContent =
+                `Question ${currentQuestion + 1} of ${questions.length}`;
+
+
+            document.getElementById(
+                "questionNumber"
+            ).textContent =
+                `QUESTION ${String(currentQuestion + 1).padStart(2, "0")}`;
+
+
+            document.getElementById(
+                "questionText"
+            ).textContent =
+                question.question;
+
+
+            const optionsContainer =
+                document.getElementById(
+                    "options"
+                );
+
+
+            optionsContainer.innerHTML = "";
+
+
+            question.options.forEach(
+                (option, index) => {
+
+                    const button =
+                        document.createElement(
+                            "button"
+                        );
+
+
+                    button.className =
+                        "option";
+
+
+                    button.textContent =
+                        option;
+
+
+                    button.onclick =
+                        () => selectAnswer(
+                            index,
+                            button
+                        );
+
+
+                    optionsContainer.appendChild(
+                        button
+                    );
+
+                }
+            );
+
+
+            selectedAnswer = null;
+
+
+            document.getElementById(
+                "nextButton"
+            ).disabled = true;
+
+
+            const percentage =
+                ((currentQuestion) /
+                    questions.length) *
+                100;
+
+
+            document.getElementById(
+                "progressFill"
+            ).style.width =
+                `${Math.max(20, percentage)}%`;
+
+
+            document.getElementById(
+                "scorePreview"
+            ).textContent =
+                `Score: ${score}`;
+        }
+
+
+        // =====================================
+        // SELECT ANSWER
+        // =====================================
+
+        function selectAnswer(
+            index,
+            button
+        ) {
+
+            selectedAnswer =
+                index;
+
+
+            document
+                .querySelectorAll(
+                    ".option"
+                )
+                .forEach(
+                    option =>
+                        option.classList.remove(
+                            "selected"
+                        )
+                );
+
+
+            button.classList.add(
+                "selected"
+            );
+
+
+            document.getElementById(
+                "nextButton"
+            ).disabled = false;
+
+        }
+
+
+        // =====================================
+        // NEXT QUESTION
+        // =====================================
+
+        function nextQuestion() {
+
+            if (
+                selectedAnswer === null
+            ) {
+                return;
+            }
+
+
+            const correctAnswer =
+                questions[
+                    currentQuestion
+                ].answer;
+
+
+            if (
+                selectedAnswer ===
+                correctAnswer
+            ) {
+
+                score++;
+
+            }
+
+
+            currentQuestion++;
+
+
+            if (
+                currentQuestion >=
+                questions.length
+            ) {
+
+                finishQuiz();
+
+            } else {
+
+                showQuestion();
+
+            }
+
+        }
+
+
+        // =====================================
+        // FINISH QUIZ
+        // =====================================
+
+        function finishQuiz() {
+
+            const percentage =
+                Math.round(
+                    (score /
+                        questions.length) *
+                    100
+                );
+
+
+            const oldMastery =
+                getOldMastery();
+
+
+            // New mastery:
+            // 70% old + 30% quiz
+
+            const newMastery =
+                Math.round(
+                    oldMastery * 0.7 +
+                    percentage * 0.3
+                );
+
+
+            saveMastery(
+                newMastery
+            );
+
+            // Mark the current study session as completed
+
+if (currentSession) {
+
+    const sessionKey =
+        `${currentSession.subject}::${currentSession.topic}`;
+
+    let completedSessions = [];
+
+    const savedCompleted =
+        localStorage.getItem(
+            "learnLoopCompletedSessions"
+        );
+
+    if (savedCompleted) {
+
+        try {
+            completedSessions =
+                JSON.parse(savedCompleted);
+        } catch (error) {
+            completedSessions = [];
+        }
+    }
+
+    if (!completedSessions.includes(sessionKey)) {
+
+        completedSessions.push(sessionKey);
+
+    }
+
+    localStorage.setItem(
+        "learnLoopCompletedSessions",
+        JSON.stringify(
+            completedSessions
+        )
+    );
+}
+
+
+            document.getElementById(
+                "quizSection"
+            ).style.display =
+                "none";
+
+
+            document.getElementById(
+                "resultSection"
+            ).style.display =
+                "block";
+
+
+            document.getElementById(
+                "finalScore"
+            ).textContent =
+                `${score}/${questions.length}`;
+
+
+            document.getElementById(
+                "finalPercentage"
+            ).textContent =
+                `${percentage}%`;
+
+
+            document.getElementById(
+                "newMastery"
+            ).textContent =
+                `${newMastery}%`;
+
+
+            if (percentage >= 80) {
+
+                document.getElementById(
+                    "resultTitle"
+                ).textContent =
+                    "Strong understanding!";
+
+                document.getElementById(
+                    "resultMessage"
+                ).textContent =
+                    "Your mastery has increased. LearnLoop will give this topic slightly less immediate priority.";
+
+            } else if (percentage >= 50) {
+
+                document.getElementById(
+                    "resultTitle"
+                ).textContent =
+                    "You're making progress!";
+
+                document.getElementById(
+                    "resultMessage"
+                ).textContent =
+                    "Your result shows partial understanding. More practice will help strengthen this topic.";
+
+            } else {
+
+                document.getElementById(
+                    "resultTitle"
+                ).textContent =
+                    "Let's strengthen this topic.";
+
+                document.getElementById(
+                    "resultMessage"
+                ).textContent =
+                    "LearnLoop will give this topic higher priority for future study.";
+
+            }
+
+        }
+
+
+        // =====================================
+        // GET OLD MASTERY
+        // =====================================
+
+        function getOldMastery() {
+
+            const saved =
+                localStorage.getItem(
+                    "learnLoopMastery"
+                );
+
+
+            if (saved) {
+
+                try {
+
+                    const mastery =
+                        JSON.parse(saved);
+
+
+                    if (
+                        currentSession?.subject
+                    ) {
+
+                        const subject =
+                            currentSession.subject;
+
+
+                        if (
+                            mastery[subject] !==
+                            undefined
+                        ) {
+
+                            return mastery[
+                                subject
+                            ];
+
+                        }
+
+                    }
+
+                } catch (error) {
+
+                    console.log(
+                        "Could not read mastery."
+                    );
+
+                }
+
+            }
+
+
+            return 50;
+        }
+
+
+        // =====================================
+        // SAVE MASTERY
+        // =====================================
+
+        function saveMastery(
+            value
+        ) {
+
+            let mastery = {};
+
+
+            const saved =
+                localStorage.getItem(
+                    "learnLoopMastery"
+                );
+
+
+            if (saved) {
+
+                try {
+
+                    mastery =
+                        JSON.parse(saved);
+
+                } catch (error) {
+
+                    mastery = {};
+
+                }
+
+            }
+
+
+            const subject =
+                currentSession?.subject ||
+                "Mathematics";
+
+
+            mastery[subject] =
+                value;
+
+
+            localStorage.setItem(
+                "learnLoopMastery",
+                JSON.stringify(
+                    mastery
+                )
+            );
+
+
+            // Save latest quiz result
+
+            const quizResult = {
+
+                subject: subject,
+
+                topic:
+                    currentSession?.topic ||
+                    "General",
+
+                score: score,
+
+                total: questions.length,
+
+                percentage: Math.round(
+                    (score /
+                        questions.length) *
+                    100
+                ),
+
+                mastery: value,
+
+                completedAt:
+                    new Date().toISOString()
+
+            };
+
+
+            localStorage.setItem(
+                "learnLoopLatestResult",
+                JSON.stringify(
+                    quizResult
+                )
+            );
+
+        }
+
+
+        // =====================================
+        // DASHBOARD
+        // =====================================
+
+        function goDashboard() {
+
+            window.location.href =
+                "dashboard.html";
+
+        }
+
+
+        // =====================================
+        // INITIALIZE
+        // =====================================
+
+        if (
+            currentSession
+        ) {
+
+            document.getElementById(
+                "quizTitle"
+            ).textContent =
+                `${currentSession.subject} Check`;
+
+
+            document.getElementById(
+                "quizSubtitle"
+            ).textContent =
+                `Quick assessment for ${currentSession.topic}.`;
+
+        }
+
+
+        showQuestion();
+
+    </script>
+
+</body>
+
+</html>
